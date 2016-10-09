@@ -11,7 +11,6 @@ var foreman = {
   },
 
   extensionsAllowed: function (level) {
-    console.log('Extensions allowed = ' + CONTROLLER_STRUCTURES[STRUCTURE_EXTENSION][level])
     return CONTROLLER_STRUCTURES[STRUCTURE_EXTENSION][level]
   },
 
@@ -26,16 +25,13 @@ var foreman = {
 
     var extensionsNeeded = this.extensionsAllowed(room.controller.level) - extensions.length - extensionsUnderConstruction.length
     if (extensionsNeeded > 0) {
-      console.log('Extensions needed = ' + extensionsNeeded)
       var spawn = room.find(FIND_MY_SPAWNS)[0]
-      var spaces = room.lookForAround(LOOK_TERRAIN, spawn.pos.x, spawn.pos.y, 2)
+      var spaces = room.lookForEmptyTerrainAround(spawn.pos.x, spawn.pos.y, 2)
 
-      for (var space in spaces) {
-        if (spaces[space].type === LOOK_TERRAIN && spaces[space].terrain === 'plain') {
-          room.createConstructionSite(spaces[space].x, spaces[space].y, STRUCTURE_EXTENSION)
-          return
-        }
-      }
+      _.forEach(spaces, (space) => {
+        console.log(`Create extension construction site at [${space.x}, ${space.y}]`)
+        room.createConstructionSite(space.x, space.y, STRUCTURE_EXTENSION)
+      })
     }
   }
 }
