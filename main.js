@@ -31,7 +31,7 @@ module.exports.loop = function () {
   }
 
   construct('harvester', 2)
-  construct('builder', 1)
+  construct('builder', 2)
   construct('upgrader', 2)
 
   for (var name in Game.creeps) {
