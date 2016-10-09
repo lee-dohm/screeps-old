@@ -5,9 +5,9 @@
  * an array
  */
 const bodyForRole = {
-  builder: [[CARRY, WORK, MOVE]],
-  harvester: [[CARRY, WORK, MOVE]],
-  upgrader: [[CARRY, WORK, MOVE]]
+  builder: [[CARRY, MOVE, MOVE, WORK, WORK], [CARRY, WORK, MOVE]],
+  harvester: [[CARRY, MOVE, MOVE, WORK, WORK], [CARRY, WORK, MOVE]],
+  upgrader: [[CARRY, MOVE, MOVE, WORK, WORK], [CARRY, WORK, MOVE]]
 }
 
 var foreman = {
@@ -27,8 +27,8 @@ var foreman = {
         var creeps = _.filter(Game.creeps, (creep) => creep.memory.role === role)
 
         if (creeps.length < count) {
-          var newCreep = spawn.createCreep(this.getBodyForRole(role), undefined, {role: role})
-          console.log(`Spawn new ${role}: ${newCreep}`)
+          var newCreep = spawn.createCreep(body, undefined, {role: role})
+          console.log(`Spawn new ${role} with ${body}: ${newCreep}`)
         }
       }
     }

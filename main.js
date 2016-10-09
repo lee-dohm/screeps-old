@@ -9,9 +9,9 @@ const roleBuilder = require('role.builder')
 module.exports.loop = function () {
   foreman.deleteDeadCreeps()
 
-  foreman.createCreep('builder', 4)
+  foreman.createCreep('builder', 5)
   foreman.createCreep('harvester', 4)
-  foreman.createCreep('upgrader', 4)
+  foreman.createCreep('upgrader', 5)
 
   _.forEach(Game.rooms, (room) => { foreman.supervise(room) })
 
