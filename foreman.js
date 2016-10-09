@@ -1,20 +1,12 @@
 var helpers = require('helpers')
 
 var foreman = {
-  deleteDeadCreeps: function () {
-    for(var name in Memory.creeps) {
-      if(!Game.creeps[name]) {
-        delete Memory.creeps[name];
-        console.log('Clearing non-existing creep memory:', name);
-      }
-    }
-  },
-
-  extensionsAllowed: function (level) {
-    return CONTROLLER_STRUCTURES[STRUCTURE_EXTENSION][level]
-  },
-
-  run: function (room) {
+  /**
+   * Creates construction sites for up to the allowed number of extensions in a room.
+   *
+   * @param {Room} room Room to create extensions in
+   */
+  createExtensions: function (room) {
     var extensions = room.find(FIND_MY_STRUCTURES, {
       filter: (structure) => { return structure.structureType == STRUCTURE_EXTENSION }
     })
@@ -33,6 +25,37 @@ var foreman = {
         room.createConstructionSite(space.x, space.y, STRUCTURE_EXTENSION)
       })
     }
+  },
+
+  /**
+   * Delete all dead creeps from memory.
+   */
+  deleteDeadCreeps: function () {
+    for(var name in Memory.creeps) {
+      if(!Game.creeps[name]) {
+        delete Memory.creeps[name];
+        console.log('Clearing non-existing creep memory:', name);
+      }
+    }
+  },
+
+  /**
+   * Gets the allowed number of extensions based on a room's controller level.
+   *
+   * @param  {Number} level Level of the room's controller.
+   * @return {Number} Number of extensions allowed in the room.
+   */
+  extensionsAllowed: function (level) {
+    return CONTROLLER_STRUCTURES[STRUCTURE_EXTENSION][level]
+  },
+
+  /**
+   * Examines the room state and performs any necessary tasks.
+   *
+   * @param  {Room} room Room to supervise.
+   */
+  run: function (room) {
+    this.createExtensions(room)
   }
 }
 
