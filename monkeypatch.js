@@ -1,5 +1,3 @@
-var helpers = require('helpers')
-
 Room.prototype.lookForAround = function (what, x, y, distance) {
   var top = y - distance
   var left = x - distance
