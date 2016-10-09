@@ -1,6 +1,6 @@
 var helpers = require('helpers')
 
-var bodyForRole = {
+const bodyForRole = {
   builder: [CARRY, WORK, MOVE],
   harvester: [CARRY, WORK, MOVE],
   upgrader: [CARRY, WORK, MOVE]
@@ -15,14 +15,11 @@ var foreman = {
    */
   createCreep: function (role, count) {
     var spawn = Game.spawns['Spawn1']
+    var creeps = _.filter(Game.creeps, (creep) => creep.memory.role === role)
 
-    if (spawn.canCreateCreep(this.getBodyForRole(role))) {
-      var creeps = _.filter(Game.creeps, (creep) => creep.memory.role === role)
-
-      if (creeps.length < count) {
-        var newCreep = spawn.createCreep(this.getBodyForRole(role), undefined, {role: role})
-        console.log('Spawning new ' + role + ': ' + newCreep)
-      }
+    if (!spawn.spawning && creeps.length < count) {
+      var newCreep = spawn.createCreep(this.getBodyForRole(role), undefined, {role: role})
+      console.log(`Spawn new ${role}: ${newCreep}`)
     }
   },
 

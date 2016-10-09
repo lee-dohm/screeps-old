@@ -1,14 +1,12 @@
 require('monkeypatch')
 
-var foreman = require('foreman')
-var helpers = require('helpers')
-var roleHarvester = require('role.harvester')
-var roleUpgrader = require('role.upgrader')
-var roleBuilder = require('role.builder')
+const foreman = require('foreman')
+const helpers = require('helpers')
+const roleHarvester = require('role.harvester')
+const roleUpgrader = require('role.upgrader')
+const roleBuilder = require('role.builder')
 
 module.exports.loop = function () {
-  console.log(`Time = ${Game.time}`)
-
   foreman.deleteDeadCreeps()
 
   foreman.createCreep('builder', 3)
