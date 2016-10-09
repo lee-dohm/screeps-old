@@ -1,5 +1,8 @@
+require('monkeypatch')
+
 var construct = require('construct')
 var foreman = require('foreman')
+var helpers = require('helpers')
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
@@ -7,12 +10,7 @@ var roleBuilder = require('role.builder');
 module.exports.loop = function () {
   console.log('Time = ' + Game.time)
 
-  for(var name in Memory.creeps) {
-    if(!Game.creeps[name]) {
-      delete Memory.creeps[name];
-      console.log('Clearing non-existing creep memory:', name);
-    }
-  }
+  foreman.deleteDeadCreeps()
 
   var tower = Game.getObjectById('TOWER_ID');
 
