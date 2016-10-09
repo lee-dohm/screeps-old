@@ -1,5 +1,3 @@
-var helpers = require('helpers')
-
 const bodyForRole = {
   builder: [CARRY, WORK, MOVE],
   harvester: [CARRY, WORK, MOVE],
