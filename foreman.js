@@ -1,3 +1,9 @@
+/**
+ * Stores the various body descriptions for each role name.
+ *
+ * If there is only one entry for a role name, then that is the only body for that role. If there is
+ * an array
+ */
 const bodyForRole = {
   builder: [CARRY, WORK, MOVE],
   harvester: [CARRY, WORK, MOVE],
@@ -13,11 +19,14 @@ var foreman = {
    */
   createCreep: function (role, count) {
     var spawn = Game.spawns['Spawn1']
-    var creeps = _.filter(Game.creeps, (creep) => creep.memory.role === role)
 
-    if (!spawn.spawning && creeps.length < count) {
-      var newCreep = spawn.createCreep(this.getBodyForRole(role), undefined, {role: role})
-      console.log(`Spawn new ${role}: ${newCreep}`)
+    if (!spawn.spawning && spawn.canCreateCreep(this.getBodyForRole(role)) == OK) {
+      var creeps = _.filter(Game.creeps, (creep) => creep.memory.role === role)
+
+      if (creeps.length < count) {
+        var newCreep = spawn.createCreep(this.getBodyForRole(role), undefined, {role: role})
+        console.log(`Spawn new ${role}: ${newCreep}`)
+      }
     }
   },
 
