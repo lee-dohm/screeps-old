@@ -54,7 +54,7 @@ var foreman = {
    *
    * @param  {Room} room Room to supervise.
    */
-  run: function (room) {
+  supervise: function (room) {
     this.createExtensions(room)
   }
 }

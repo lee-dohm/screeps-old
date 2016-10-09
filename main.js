@@ -16,7 +16,7 @@ module.exports.loop = function () {
   construct('builder', 2)
   construct('upgrader', 2)
 
-  _.forEach(Game.rooms, (room) => { foreman.run(room) })
+  _.forEach(Game.rooms, (room) => { foreman.supervise(room) })
 
   _.forEach(Game.creeps, (creep) => {
     if (creep.memory.role == 'builder') {
