@@ -1,4 +1,5 @@
 var construct = require('construct')
+var foreman = require('foreman')
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
@@ -33,6 +34,10 @@ module.exports.loop = function () {
   construct('harvester', 2)
   construct('builder', 2)
   construct('upgrader', 2)
+
+  for (var name in Game.rooms) {
+    foreman.run(Game.rooms[name])
+  }
 
   for (var name in Game.creeps) {
     var creep = Game.creeps[name];
