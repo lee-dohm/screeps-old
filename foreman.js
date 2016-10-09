@@ -5,9 +5,9 @@
  * an array
  */
 const bodyForRole = {
-  builder: [CARRY, WORK, MOVE],
-  harvester: [CARRY, WORK, MOVE],
-  upgrader: [CARRY, WORK, MOVE]
+  builder: [[CARRY, WORK, MOVE]],
+  harvester: [[CARRY, WORK, MOVE]],
+  upgrader: [[CARRY, WORK, MOVE]]
 }
 
 var foreman = {
@@ -20,12 +20,16 @@ var foreman = {
   createCreep: function (role, count) {
     var spawn = Game.spawns['Spawn1']
 
-    if (!spawn.spawning && spawn.canCreateCreep(this.getBodyForRole(role)) == OK) {
-      var creeps = _.filter(Game.creeps, (creep) => creep.memory.role === role)
+    if (!spawn.spawning) {
+      let body = this.getBestBodyForRole(spawn, role)
 
-      if (creeps.length < count) {
-        var newCreep = spawn.createCreep(this.getBodyForRole(role), undefined, {role: role})
-        console.log(`Spawn new ${role}: ${newCreep}`)
+      if (body) {
+        var creeps = _.filter(Game.creeps, (creep) => creep.memory.role === role)
+
+        if (creeps.length < count) {
+          var newCreep = spawn.createCreep(this.getBodyForRole(role), undefined, {role: role})
+          console.log(`Spawn new ${role}: ${newCreep}`)
+        }
       }
     }
   },
@@ -78,13 +82,19 @@ var foreman = {
     return CONTROLLER_STRUCTURES[STRUCTURE_EXTENSION][level]
   },
 
+  getBestBodyForRole: function(spawn, role) {
+    let bodies = this.getBodiesForRole(role)
+
+    return _.find(bodies, (body) => spawn.canCreateCreep(body) == OK)
+  },
+
   /**
-   * Gets the body description for the given role.
+   * Gets the body descriptions for the given role.
    *
-   * @param  {String} role Role to retrieve the body for.
+   * @param  {String} role Role to retrieve the body descriptions for.
    * @return {Array} Description of the body.
    */
-  getBodyForRole: function (role) {
+  getBodiesForRole: function (role) {
     return bodyForRole[role]
   },
 
