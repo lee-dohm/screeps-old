@@ -82,6 +82,13 @@ var foreman = {
     return CONTROLLER_STRUCTURES[STRUCTURE_EXTENSION][level]
   },
 
+  /**
+   * Gets the best body for the given role that can be constructed by the spawn.
+   *
+   * @param  {StructureSpawn} spawn Spawn to construct the creep.
+   * @param  {String} role Role to retrieve the body description for.
+   * @return {Array} Body description.
+   */
   getBestBodyForRole: function(spawn, role) {
     let bodies = this.getBodiesForRole(role)
 
@@ -92,7 +99,7 @@ var foreman = {
    * Gets the body descriptions for the given role.
    *
    * @param  {String} role Role to retrieve the body descriptions for.
-   * @return {Array} Description of the body.
+   * @return {Array} Descriptions of the bodies defined for that role.
    */
   getBodiesForRole: function (role) {
     return bodyForRole[role]
