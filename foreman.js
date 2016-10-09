@@ -1,6 +1,31 @@
 var helpers = require('helpers')
 
+var bodyForRole = {
+  builder: [CARRY, WORK, MOVE],
+  harvester: [CARRY, WORK, MOVE],
+  upgrader: [CARRY, WORK, MOVE]
+}
+
 var foreman = {
+  /**
+   * Create `count` creeps for the given role if the energy is available.
+   *
+   * @param  {String} role  Role of the creep to create.
+   * @param  {Number} count Number of creeps of the given role to create.
+   */
+  createCreep: function (role, count) {
+    var spawn = Game.spawns['Spawn1']
+
+    if (spawn.canCreateCreep(this.getBodyForRole(role))) {
+      var creeps = _.filter(Game.creeps, (creep) => creep.memory.role === role)
+
+      if (creeps.length < count) {
+        var newCreep = spawn.createCreep(this.getBodyForRole(role), undefined, {role: role})
+        console.log('Spawning new ' + role + ': ' + newCreep)
+      }
+    }
+  },
+
   /**
    * Creates construction sites for up to the allowed number of extensions in a room.
    *
@@ -47,6 +72,16 @@ var foreman = {
    */
   extensionsAllowed: function (level) {
     return CONTROLLER_STRUCTURES[STRUCTURE_EXTENSION][level]
+  },
+
+  /**
+   * Gets the body description for the given role.
+   *
+   * @param  {String} role Role to retrieve the body for.
+   * @return {Array} Description of the body.
+   */
+  getBodyForRole: function (role) {
+    return bodyForRole[role]
   },
 
   /**

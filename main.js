@@ -1,6 +1,5 @@
 require('monkeypatch')
 
-var construct = require('construct')
 var foreman = require('foreman')
 var helpers = require('helpers')
 var roleHarvester = require('role.harvester')
@@ -12,9 +11,9 @@ module.exports.loop = function () {
 
   foreman.deleteDeadCreeps()
 
-  construct('harvester', 2)
-  construct('builder', 2)
-  construct('upgrader', 2)
+  foreman.createCreep('builder', 3)
+  foreman.createCreep('harvester', 3)
+  foreman.createCreep('upgrader', 3)
 
   _.forEach(Game.rooms, (room) => { foreman.supervise(room) })
 
