@@ -4,6 +4,7 @@
 const bodyForRole = {
   builder: [[CARRY, MOVE, MOVE, WORK, WORK], [CARRY, WORK, MOVE]],
   harvester: [[CARRY, MOVE, MOVE, WORK, WORK], [CARRY, WORK, MOVE]],
+  soldier: [[ATTACK, ATTACK, MOVE, MOVE]],
   upgrader: [[CARRY, MOVE, MOVE, WORK, WORK], [CARRY, WORK, MOVE]]
 }
 
