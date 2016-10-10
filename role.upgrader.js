@@ -13,12 +13,14 @@ var roleUpgrader = {
 
     if (creep.memory.upgrading) {
       if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
+        creep.room.createConstructionSite(creep.pos, STRUCTURE_ROAD)
         creep.moveTo(creep.room.controller)
       }
     } else {
       var source = creep.pos.findClosestByRange(FIND_SOURCES)
 
       if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
+        creep.room.createConstructionSite(creep.pos, STRUCTURE_ROAD)
         creep.moveTo(source)
       }
     }
