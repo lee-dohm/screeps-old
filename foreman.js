@@ -1,13 +1,21 @@
 /**
  * Stores the various body descriptions for each role name.
- *
- * If there is only one entry for a role name, then that is the only body for that role. If there is
- * an array
  */
 const bodyForRole = {
   builder: [[CARRY, MOVE, MOVE, WORK, WORK], [CARRY, WORK, MOVE]],
   harvester: [[CARRY, MOVE, MOVE, WORK, WORK], [CARRY, WORK, MOVE]],
   upgrader: [[CARRY, MOVE, MOVE, WORK, WORK], [CARRY, WORK, MOVE]]
+}
+
+const costForPart = {
+  move: 50,
+  work: 100,
+  carry: 50,
+  attack: 80,
+  ranged_attack: 150,
+  heal: 250,
+  claim: 600,
+  tough: 10
 }
 
 var foreman = {
@@ -23,11 +31,11 @@ var foreman = {
     if (!spawn.spawning) {
       let body = this.getBestBodyForRole(spawn, role)
 
-      if (body) {
+      if (body && spawn.canCreateCreep(body) == OK) {
         var creeps = _.filter(Game.creeps, (creep) => creep.memory.role === role)
 
         if (creeps.length < count) {
-          var newCreep = spawn.createCreep(body, undefined, {role: role})
+          var newCreep = spawn.createCreep(body, undefined, {role: role, body: body})
           console.log(`Spawn new ${role} with ${body}: ${newCreep}`)
         }
       }
@@ -91,8 +99,9 @@ var foreman = {
    */
   getBestBodyForRole: function(spawn, role) {
     let bodies = this.getBodiesForRole(role)
+    let capacity = this.getTotalEnergyCapacity(spawn)
 
-    return _.find(bodies, (body) => spawn.canCreateCreep(body) == OK)
+    return _.find(bodies, (body) => this.getEnergyCostForBody(body) <= capacity)
   },
 
   /**
@@ -103,6 +112,23 @@ var foreman = {
    */
   getBodiesForRole: function (role) {
     return bodyForRole[role]
+  },
+
+  getEnergyCostForBody: function (body) {
+    let total = 0
+
+    _.forEach(body, (part) => { total += costForPart[part] })
+
+    return total
+  },
+
+  getTotalEnergyCapacity: function (spawn) {
+    let total = spawn.energyCapacity
+
+    let extensions = spawn.room.find(FIND_MY_STRUCTURES, { filter: { structureType: STRUCTURE_EXTENSION }})
+    _.forEach(extensions, (extension) => { total += extension.energyCapacity })
+
+    return total
   },
 
   /**
