@@ -12,9 +12,9 @@ module.exports.loop = function () {
   foreman.deleteDeadCreeps()
 
   foreman.createCreep('builder', 5)
-  foreman.createCreep('harvester', 5)
   foreman.createCreep('soldier', 5)
   foreman.createCreep('upgrader', 8)
+  foreman.createCreep('harvester', 5)
 
   _.forEach(Game.rooms, (room) => { foreman.supervise(room) })
 

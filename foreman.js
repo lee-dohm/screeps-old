@@ -2,10 +2,10 @@
  * Stores the various body descriptions for each role name.
  */
 const bodyForRole = {
-  builder: [[CARRY, MOVE, MOVE, WORK, WORK], [CARRY, WORK, MOVE]],
-  harvester: [[CARRY, MOVE, MOVE, WORK, WORK], [CARRY, WORK, MOVE]],
+  builder: [[CARRY, WORK, MOVE]],
+  harvester: [[CARRY, WORK, MOVE]],
   soldier: [[ATTACK, ATTACK, MOVE, MOVE]],
-  upgrader: [[CARRY, MOVE, MOVE, WORK, WORK], [CARRY, WORK, MOVE]]
+  upgrader: [[CARRY, WORK, MOVE]]
 }
 
 const costForPart = {
